@@ -4,7 +4,7 @@ import AdvertRoutes from "./routes/Advert.js";
 const app = express();
 app.use(json());
 
-router.get("/", (req, res, next) => {
+app.get("/", (req, res, next) => {
   res.status(200);
 });
 
