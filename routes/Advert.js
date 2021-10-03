@@ -16,9 +16,6 @@ router.post("/adverts", AdvertController.postAdvert);
 router.patch("/adverts/:id", AdvertController.updateAdvert);
 
 // DELETE advert
-// router.post("/adverts/:id", (req, res, next) => {
-//   const data = req.body;
-//   res.status(201).send(data);
-// });
+router.delete("/adverts/:id", AdvertController.deleteAdvert);
 
 export default router;
