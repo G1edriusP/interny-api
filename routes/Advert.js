@@ -1,40 +1,19 @@
 import express from "express";
-
-// Mock data
-import { ADVERTS } from "../data/Advert.js";
+import AdvertController from "../controllers/Advert.js";
 
 const router = express.Router();
 
-// router.get("/", (req, res, next) => {
-//   res.status(200);
-// });
-
 // GET adverts
-router.get("/adverts", (req, res, next) => {
-  res.status(200).send(ADVERTS);
-});
+router.get("/adverts", AdvertController.getAdverts);
 
 // GET advert
-router.get("/adverts/:id", (req, res, next) => {
-  const id = JSON.parse(req.params.id);
-  const advert = ADVERTS.find((ad) => ad.id === id);
-  res.status(200).send(advert);
-});
+router.get("/adverts/:id", AdvertController.getAdvert);
 
 // POST advert
-router.post("/adverts", (req, res, next) => {
-  const data = req.body;
-  res.status(201).send(data);
-});
+router.post("/adverts", AdvertController.postAdvert);
 
 // PATCH advert
-router.patch("/adverts/:id", (req, res, next) => {
-  const id = req.params.id;
-  const data = req.body;
-  const advert = ADVERTS.find((ad) => ad.id === id);
-  const updatedAdvert = { ...advert, ...data };
-  res.status(200).send(updatedAdvert);
-});
+router.patch("/adverts/:id", AdvertController.updateAdvert);
 
 // DELETE advert
 // router.post("/adverts/:id", (req, res, next) => {

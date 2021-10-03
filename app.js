@@ -4,6 +4,10 @@ import AdvertRoutes from "./routes/Advert.js";
 const app = express();
 app.use(json());
 
+router.get("/", (req, res, next) => {
+  res.status(200);
+});
+
 app.use("/", AdvertRoutes);
 
 let port = process.env.PORT;
