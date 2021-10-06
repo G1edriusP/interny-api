@@ -1,5 +1,5 @@
 // Mock data
-import { ADVERTS } from "../data/Advert.js";
+import { ORGANIZATIONS } from "../data/Organization.js";
 
 // Response messages
 import * as Messages from "../utils/constants/messages.js";
@@ -7,24 +7,24 @@ import * as Messages from "../utils/constants/messages.js";
 // Utils
 import { checkId } from "../utils/helpers/other.js";
 
-const getAdverts = async (_, res) => {
-  res.status(200).send(ADVERTS);
+const getOrganizations = async (_, res) => {
+  res.status(200).send(ORGANIZATIONS);
 };
 
-const getAdvert = async (req, res) => {
+const getOrganization = async (req, res) => {
   const id = checkId(req, res);
   if (id || id === 0) {
-    const advert = ADVERTS.find((ad) => ad.id === id);
+    const organization = ORGANIZATIONS.find((org) => org.id === id);
 
-    if (advert) {
-      res.status(200).send(advert);
+    if (organization) {
+      res.status(200).send(organization);
     } else {
       res.status(404).send({ success: false, message: Messages.GET_NOT_FOUND });
     }
   }
 };
 
-const postAdvert = async (req, res) => {
+const postOrganization = async (req, res) => {
   const data = req.body;
   if (Object.keys(data).length === 0) {
     res.status(400).send({ success: false, message: Messages.BAD_BODY });
@@ -33,7 +33,7 @@ const postAdvert = async (req, res) => {
   }
 };
 
-const updateAdvert = async (req, res) => {
+const updateOrganization = async (req, res) => {
   const id = checkId(req, res);
   if (id || id === 0) {
     const data = req.body;
@@ -41,11 +41,11 @@ const updateAdvert = async (req, res) => {
     if (Object.keys(data).length === 0) {
       res.status(400).send({ success: false, message: Messages.BAD_BODY });
     } else {
-      const advert = ADVERTS.find((ad) => ad.id === id);
+      const organization = ORGANIZATIONS.find((org) => org.id === id);
 
-      if (advert) {
-        const updatedAdvert = { ...advert, ...data };
-        res.status(200).send(updatedAdvert);
+      if (organization) {
+        const updatedOrganization = { ...organization, ...data };
+        res.status(200).send(updatedOrganization);
       } else {
         res
           .status(404)
@@ -55,12 +55,12 @@ const updateAdvert = async (req, res) => {
   }
 };
 
-const deleteAdvert = async (req, res) => {
+const deleteOrganization = async (req, res) => {
   const id = checkId(req, res);
   if (id || id === 0) {
-    const advert = ADVERTS.find((ad) => ad.id === id);
+    const organization = ORGANIZATIONS.find((org) => org.id === id);
 
-    if (advert) {
+    if (organization) {
       res
         .status(200)
         .send({ success: true, message: Messages.DELETE_SUCCESSFUL });
@@ -73,9 +73,9 @@ const deleteAdvert = async (req, res) => {
 };
 
 export default {
-  getAdverts,
-  getAdvert,
-  postAdvert,
-  updateAdvert,
-  deleteAdvert,
+  getOrganizations,
+  getOrganization,
+  postOrganization,
+  updateOrganization,
+  deleteOrganization,
 };

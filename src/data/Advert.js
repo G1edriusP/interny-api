@@ -6,8 +6,8 @@ export const ADVERTS = [
     location: {
       address: "Kaunas",
       coords: {
-        longitude: "34.5677",
-        latitude: "45.6767",
+        longitude: 34.5677,
+        latitude: 45.6767,
       },
     },
     info: {
@@ -29,8 +29,8 @@ export const ADVERTS = [
     location: {
       address: "Vilnius",
       coords: {
-        longitude: "34.5677",
-        latitude: "45.6767",
+        longitude: 34.5677,
+        latitude: 45.6767,
       },
     },
     info: {
@@ -52,8 +52,8 @@ export const ADVERTS = [
     location: {
       address: "Kaunas",
       coords: {
-        longitude: "34.5677",
-        latitude: "45.6767",
+        longitude: 34.5677,
+        latitude: 45.6767,
       },
     },
     info: {
@@ -75,8 +75,8 @@ export const ADVERTS = [
     location: {
       address: "Kaunas",
       coords: {
-        longitude: "34.2077",
-        latitude: "50.6767",
+        longitude: 34.2077,
+        latitude: 50.6767,
       },
     },
     info: {
