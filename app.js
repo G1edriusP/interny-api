@@ -1,6 +1,7 @@
 import express, { json } from "express";
 import AdvertRoutes from "./src/routes/Advert.js";
 import OrganizationRoutes from "./src/routes/Organization.js";
+import ApplicationRoutes from "./src/routes/Application.js";
 
 const app = express();
 
@@ -21,6 +22,7 @@ app.use((err, _, res, next) => {
 // API routes for different objects
 app.use("/", AdvertRoutes);
 app.use("/", OrganizationRoutes);
+app.use("/", ApplicationRoutes);
 
 // Select on which port the server will run
 let port = process.env.PORT;
