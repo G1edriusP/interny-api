@@ -2,6 +2,7 @@ import express, { json } from "express";
 import AdvertRoutes from "./src/routes/Advert.js";
 import OrganizationRoutes from "./src/routes/Organization.js";
 import ApplicationRoutes from "./src/routes/Application.js";
+import OtherRoutes from "./src/routes/Other.js";
 
 const app = express();
 
@@ -23,6 +24,7 @@ app.use((err, _, res, next) => {
 app.use("/", AdvertRoutes);
 app.use("/", OrganizationRoutes);
 app.use("/", ApplicationRoutes);
+app.use("/", OtherRoutes);
 
 // Select on which port the server will run
 let port = process.env.PORT;
