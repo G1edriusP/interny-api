@@ -4,7 +4,7 @@ import mysql from "mysql";
 import { DATABASE_CONFIG } from "../constants/database.js";
 
 // Create a connection to the database
-const connection = mysql.createConnection({
+const connection = mysql.createPool({
   host: DATABASE_CONFIG.host,
   user: DATABASE_CONFIG.user,
   password: DATABASE_CONFIG.password,
@@ -12,9 +12,9 @@ const connection = mysql.createConnection({
 });
 
 // Open the MySQL connection
-connection.connect((error) => {
-  if (error) throw error;
-  console.log("Successfully connected to the database.");
-});
+// connection.connect((error) => {
+//   if (error) throw error;
+//   console.log("Successfully connected to the database.");
+// });
 
 export default connection;
