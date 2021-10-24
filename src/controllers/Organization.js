@@ -1,5 +1,5 @@
 // Database
-import Organization, { requiredKeys } from "../data/Organization.js";
+import Organization, { requiredKeys, allKeys } from "../data/Organization.js";
 
 // Response messages
 import * as Messages from "../utils/constants/messages.js";
@@ -39,7 +39,7 @@ const postOrganization = async (req, res) => {
   if (Object.keys(data).length === 0) {
     res.status(400).send({ success: false, message: Messages.BAD_BODY });
   } else {
-    const params = checkRequired(requiredKeys, data, res);
+    const params = checkRequired(requiredKeys, allKeys, data, res);
     if (params) {
       const organization = new Organization(params);
       Organization.create(organization, (err, data) => {
@@ -61,7 +61,7 @@ const updateOrganization = async (req, res) => {
     if (Object.keys(data).length === 0) {
       res.status(400).send({ success: false, message: Messages.BAD_BODY });
     } else {
-      const params = checkRequired(requiredKeys, data, res);
+      const params = checkRequired(requiredKeys, allKeys, data, res);
       if (params) {
         const organization = new Organization(params);
         Organization.update(id, organization, (err, data) => {

@@ -11,8 +11,8 @@ export const checkId = (req, res, idName = "id") => {
   }
 };
 
-export const checkRequired = (keys, body, res) => {
-  const valid = keys.every((key) => {
+export const checkRequired = (requiredKeys, allKeys, body, res) => {
+  const valid = requiredKeys.every((key) => {
     if (Object.keys(body).includes(key)) {
       return true;
     } else {
@@ -23,5 +23,17 @@ export const checkRequired = (keys, body, res) => {
     }
   });
 
-  return valid ? body : undefined;
+  if (valid) {
+    const res = {};
+    allKeys.forEach((key) => {
+      if (Object.keys(body).includes(key)) {
+        res[key] = body[key];
+      } else {
+        res[key] = null;
+      }
+    });
+    return res;
+  }
+
+  return undefined;
 };

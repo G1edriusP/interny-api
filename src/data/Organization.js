@@ -46,8 +46,7 @@ class Organization {
 
   static create(organization, callback) {
     database.query(
-      `INSERT INTO ${DATABASE_NAME}.organizations SET ?`,
-      organization,
+      `INSERT INTO ${DATABASE_NAME}.organizations SET ${organization}`,
       (err, res) => {
         if (err) {
           callback(err, null);
@@ -61,8 +60,7 @@ class Organization {
 
   static update = (id, organization, callback) => {
     database.query(
-      `UPDATE ${DATABASE_NAME}.organizations SET name = ?, description = ?, field = ?, address = ?, longitude = ?, latitude = ? WHERE id = ?`,
-      [...Object.values(organization).filter((o) => o), id],
+      `UPDATE ${DATABASE_NAME}.organizations SET name = '${organization.name}', description = '${organization.description}', field = '${organization.field}', address = '${organization.address}', longitude = '${organization.longitude}', latitude = '${organization.latitude}' WHERE id = ${id}`,
       (err, res) => {
         if (err) {
           callback(err, null);
@@ -79,8 +77,7 @@ class Organization {
 
   static delete = (id, callback) => {
     database.query(
-      `DELETE FROM ${DATABASE_NAME}.organizations WHERE id = ?`,
-      id,
+      `DELETE FROM ${DATABASE_NAME}.organizations WHERE id = ${id}`,
       (err, res) => {
         if (err) {
           callback(err, null);
@@ -101,5 +98,13 @@ class Organization {
 export const ORGANIZATIONS = [];
 
 export const requiredKeys = ["name", "description", "field", "address"];
+export const allKeys = [
+  "name",
+  "description",
+  "field",
+  "address",
+  "longitude",
+  "latitude",
+];
 
 export default Organization;
