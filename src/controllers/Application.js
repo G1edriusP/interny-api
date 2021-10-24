@@ -33,6 +33,8 @@ const postApplication = async (req, res) => {
   }
 };
 
+// bad data was given ne 400 o 415
+
 const updateApplication = async (req, res) => {
   const id = checkId(req, res);
   if (id || id === 0) {

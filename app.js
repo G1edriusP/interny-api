@@ -1,4 +1,6 @@
 import express, { json } from "express";
+
+// Routes
 import AdvertRoutes from "./src/routes/Advert.js";
 import OrganizationRoutes from "./src/routes/Organization.js";
 import ApplicationRoutes from "./src/routes/Application.js";
