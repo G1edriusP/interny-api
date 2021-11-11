@@ -1,8 +1,11 @@
+import env from "dotenv";
+env.config();
+
 export const DATABASE_CONFIG = {
-  host: "us-cdbr-east-04.cleardb.com",
-  user: "b61825e049e934",
-  password: "ec60b61a",
-  database: "heroku_616c2f6178f304c",
+  host: process.env.DB_URL,
+  user: process.env.DB_USER,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_NAME,
 };
 
-export const DATABASE_NAME = "heroku_616c2f6178f304c";
+export const DATABASE_NAME = process.env.DB_NAME;

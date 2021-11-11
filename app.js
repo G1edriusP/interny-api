@@ -1,3 +1,6 @@
+import env from "dotenv";
+env.config();
+
 import express, { json } from "express";
 
 // Routes
@@ -29,9 +32,9 @@ app.use("/", ApplicationRoutes);
 app.use("/", OtherRoutes);
 
 // Select on which port the server will run
-let port = process.env.PORT;
+let port = process.env.APP_PORT;
 if (port == null || port == "") {
-  port = 8000;
+  port = 8005;
 }
 
 // Run server command
