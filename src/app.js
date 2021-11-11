@@ -1,13 +1,13 @@
-import env from "dotenv";
+import { config } from "dotenv";
 import express, { json } from "express";
 
 // Routes
-import AdvertRoutes from "./src/routes/Advert.js";
-import OrganizationRoutes from "./src/routes/Organization.js";
-import ApplicationRoutes from "./src/routes/Application.js";
-import OtherRoutes from "./src/routes/Other.js";
+import AdvertRoutes from "./routes/Advert.js";
+import OrganizationRoutes from "./routes/Organization.js";
+import ApplicationRoutes from "./routes/Application.js";
+import OtherRoutes from "./routes/Other.js";
 
-env.config();
+config();
 
 const app = express();
 

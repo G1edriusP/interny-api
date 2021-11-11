@@ -15,7 +15,7 @@ class User {
   }
 
   static getAll(callback) {
-    database.query(`SELECT * FROM ${DATABASE_NAME}.users`, (err, res) => {
+    database.query(`SELECT * FROM users`, (err, res) => {
       if (err) {
         callback(err, null);
       } else {

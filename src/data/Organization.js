@@ -17,51 +17,41 @@ class Organization {
   }
 
   static getAll(callback) {
-    database.query(
-      `SELECT * FROM ${DATABASE_NAME}.organizations`,
-      (err, res) => {
-        if (err) {
-          callback(err, null);
-        } else {
-          callback(null, res);
-        }
-        return;
+    database.query(`SELECT * FROM organizations`, (err, res) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, res);
       }
-    );
+      return;
+    });
   }
 
   static find(id, callback) {
-    database.query(
-      `SELECT * FROM ${DATABASE_NAME}.organizations WHERE id = ${id}`,
-      (err, res) => {
-        if (err) {
-          callback(err, null);
-        } else {
-          callback(null, res[0]);
-        }
-        return;
+    database.query(`SELECT * FROM organizations WHERE id = ${id}`, (err, res) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, res[0]);
       }
-    );
+      return;
+    });
   }
 
   static create(organization, callback) {
-    database.query(
-      `INSERT INTO ${DATABASE_NAME}.organizations SET ?`,
-      organization,
-      (err, res) => {
-        if (err) {
-          callback(err, null);
-        } else {
-          callback(null, organization);
-        }
-        return;
+    database.query(`INSERT INTO organizations SET ?`, organization, (err, res) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, organization);
       }
-    );
+      return;
+    });
   }
 
   static update = (id, organization, callback) => {
     database.query(
-      `UPDATE ${DATABASE_NAME}.organizations SET name = '${organization.name}', description = '${organization.description}', field = '${organization.field}', address = '${organization.address}', longitude = '${organization.longitude}', latitude = '${organization.latitude}' WHERE id = ${id}`,
+      `UPDATE organizations SET name = '${organization.name}', description = '${organization.description}', field = '${organization.field}', address = '${organization.address}', longitude = '${organization.longitude}', latitude = '${organization.latitude}' WHERE id = ${id}`,
       (err, res) => {
         if (err) {
           callback(err, null);
@@ -77,34 +67,24 @@ class Organization {
   };
 
   static delete = (id, callback) => {
-    database.query(
-      `DELETE FROM ${DATABASE_NAME}.organizations WHERE id = ${id}`,
-      (err, res) => {
-        if (err) {
-          callback(err, null);
-        } else if (res.affectedRows === 0) {
-          // Organization with this id was not found
-          callback({ success: false, message: Messages.GET_NOT_FOUND }, null);
-        } else {
-          callback(null, {
-            success: true,
-            message: Messages.DELETE_SUCCESSFUL,
-          });
-        }
+    database.query(`DELETE FROM organizations WHERE id = ${id}`, (err, res) => {
+      if (err) {
+        callback(err, null);
+      } else if (res.affectedRows === 0) {
+        // Organization with this id was not found
+        callback({ success: false, message: Messages.GET_NOT_FOUND }, null);
+      } else {
+        callback(null, {
+          success: true,
+          message: Messages.DELETE_SUCCESSFUL,
+        });
       }
-    );
+    });
   };
 }
 
 export const requiredKeys = ["name", "description", "field", "address"];
-export const allKeys = [
-  "name",
-  "description",
-  "field",
-  "address",
-  "longitude",
-  "latitude",
-];
+export const allKeys = ["name", "description", "field", "address", "longitude", "latitude"];
 
 export const ORGANIZATIONS = [];
 

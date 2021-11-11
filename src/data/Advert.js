@@ -16,7 +16,7 @@ class Advert {
   }
 
   static getAll(callback) {
-    database.query(`SELECT * FROM ${DATABASE_NAME}.adverts`, (err, res) => {
+    database.query(`SELECT * FROM adverts`, (err, res) => {
       if (err) {
         callback(err, null);
       } else {
@@ -27,51 +27,41 @@ class Advert {
   }
 
   static getAllFromOrganization(id, callback) {
-    database.query(
-      `SELECT * FROM ${DATABASE_NAME}.adverts WHERE organizationId = ${id}`,
-      (err, res) => {
-        if (err) {
-          callback(err, null);
-        } else {
-          callback(null, res);
-        }
-        return;
+    database.query(`SELECT * FROM adverts WHERE organizationId = ${id}`, (err, res) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, res);
       }
-    );
+      return;
+    });
   }
 
   static find(id, callback) {
-    database.query(
-      `SELECT * FROM ${DATABASE_NAME}.adverts WHERE id = ${id}`,
-      (err, res) => {
-        if (err) {
-          callback(err, null);
-        } else {
-          callback(null, res[0]);
-        }
-        return;
+    database.query(`SELECT * FROM adverts WHERE id = ${id}`, (err, res) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, res[0]);
       }
-    );
+      return;
+    });
   }
 
   static create(advert, callback) {
-    database.query(
-      `INSERT INTO ${DATABASE_NAME}.adverts SET ?`,
-      advert,
-      (err, res) => {
-        if (err) {
-          callback(err, null);
-        } else {
-          callback(null, advert);
-        }
-        return;
+    database.query(`INSERT INTO adverts SET ?`, advert, (err, res) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, advert);
       }
-    );
+      return;
+    });
   }
 
   static update = (id, advert, callback) => {
     database.query(
-      `UPDATE ${DATABASE_NAME}.adverts SET title = '${advert.title}', description = '${advert.description}', years = '${advert.years}', months = '${advert.months}', days = '${advert.days}', webUrl = '${advert.webUrl}', organizationId = '${advert.organizationId}' WHERE id = ${id}`,
+      `UPDATE adverts SET title = '${advert.title}', description = '${advert.description}', years = '${advert.years}', months = '${advert.months}', days = '${advert.days}', webUrl = '${advert.webUrl}', organizationId = '${advert.organizationId}' WHERE id = ${id}`,
       (err, res) => {
         if (err) {
           callback(err, null);
@@ -87,33 +77,23 @@ class Advert {
   };
 
   static delete = (id, callback) => {
-    database.query(
-      `DELETE FROM ${DATABASE_NAME}.adverts WHERE id = ${id}`,
-      (err, res) => {
-        if (err) {
-          callback(err, null);
-        } else if (res.affectedRows === 0) {
-          // Organization with this id was not found
-          callback({ success: false, message: Messages.GET_NOT_FOUND }, null);
-        } else {
-          callback(null, {
-            success: true,
-            message: Messages.DELETE_SUCCESSFUL,
-          });
-        }
+    database.query(`DELETE FROM adverts WHERE id = ${id}`, (err, res) => {
+      if (err) {
+        callback(err, null);
+      } else if (res.affectedRows === 0) {
+        // Organization with this id was not found
+        callback({ success: false, message: Messages.GET_NOT_FOUND }, null);
+      } else {
+        callback(null, {
+          success: true,
+          message: Messages.DELETE_SUCCESSFUL,
+        });
       }
-    );
+    });
   };
 }
 
-export const requiredKeys = [
-  "title",
-  "description",
-  "years",
-  "months",
-  "days",
-  "organizationId",
-];
+export const requiredKeys = ["title", "description", "years", "months", "days", "organizationId"];
 export const allKeys = [
   "title",
   "description",
