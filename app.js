@@ -1,6 +1,4 @@
 import env from "dotenv";
-env.config();
-
 import express, { json } from "express";
 
 // Routes
@@ -8,6 +6,8 @@ import AdvertRoutes from "./src/routes/Advert.js";
 import OrganizationRoutes from "./src/routes/Organization.js";
 import ApplicationRoutes from "./src/routes/Application.js";
 import OtherRoutes from "./src/routes/Other.js";
+
+env.config();
 
 const app = express();
 
@@ -32,10 +32,7 @@ app.use("/", ApplicationRoutes);
 app.use("/", OtherRoutes);
 
 // Select on which port the server will run
-let port = process.env.APP_PORT;
-if (port == null || port == "") {
-  port = 8005;
-}
+let port = process.env.PORT || 5000;
 
 // Run server command
 app.listen(port, () => {

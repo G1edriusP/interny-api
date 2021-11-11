@@ -4,9 +4,7 @@
   "description": "",
   "main": "app.js",
   "scripts": {
-    "start": "npm-run-all --parallel appStart authStart",
-    "appStart": "node app.js",
-    "authStart": "node ./src/utils/auth.js"
+    "start": "node app.js"
   },
   "author": "Giedrius Pakalniskis",
   "license": "ISC",

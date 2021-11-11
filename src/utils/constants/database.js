@@ -1,6 +1,3 @@
-import env from "dotenv";
-env.config();
-
 export const DATABASE_CONFIG = {
   host: process.env.DB_URL,
   user: process.env.DB_USER,
