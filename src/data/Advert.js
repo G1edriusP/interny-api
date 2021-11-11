@@ -1,94 +1,129 @@
-export const ADVERTS = [
-  {
-    id: 1,
-    title: "Skelbimas #1",
-    organization: "Organization1",
-    location: {
-      address: "Kaunas",
-      coords: {
-        longitude: 34.5677,
-        latitude: 45.6767,
-      },
-    },
-    info: {
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempor, dui sed ullamcorper scelerisque, mi justo vehicula nibh, in venenatis purus purus sed mauris. Quisque feugiat mi nibh.",
-      duration: {
-        years: 0,
-        months: 0,
-        days: 0,
-      },
-      applicationsCount: 0,
-      web: "https://www.google.com",
-    },
-  },
-  {
-    id: 2,
-    title: "Skelbimas #2",
-    organization: "Organization2",
-    location: {
-      address: "Vilnius",
-      coords: {
-        longitude: 34.5677,
-        latitude: 45.6767,
-      },
-    },
-    info: {
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempor, dui sed ullamcorper scelerisque, mi justo vehicula nibh, in venenatis purus purus sed mauris. Quisque feugiat mi nibh.",
-      duration: {
-        years: 0,
-        months: 0,
-        days: 0,
-      },
-      applicationsCount: 0,
-      web: "https://www.google.com",
-    },
-  },
-  {
-    id: 3,
-    title: "Skelbimas #3",
-    organization: "Organization1",
-    location: {
-      address: "Kaunas",
-      coords: {
-        longitude: 34.5677,
-        latitude: 45.6767,
-      },
-    },
-    info: {
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempor, dui sed ullamcorper scelerisque, mi justo vehicula nibh, in venenatis purus purus sed mauris. Quisque feugiat mi nibh.",
-      duration: {
-        years: 0,
-        months: 0,
-        days: 0,
-      },
-      applicationsCount: 0,
-      web: "https://www.google.com",
-    },
-  },
-  {
-    id: 4,
-    title: "Skelbimas #4",
-    organization: "Organization3",
-    location: {
-      address: "Kaunas",
-      coords: {
-        longitude: 34.2077,
-        latitude: 50.6767,
-      },
-    },
-    info: {
-      description:
-        "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec tempor, dui sed ullamcorper scelerisque, mi justo vehicula nibh, in venenatis purus purus sed mauris. Quisque feugiat mi nibh.",
-      duration: {
-        years: 0,
-        months: 0,
-        days: 0,
-      },
-      applicationsCount: 0,
-      web: "https://www.google.com",
-    },
-  },
+import database from "../utils/helpers/database.js";
+
+// Constants
+import { DATABASE_NAME } from "../utils/constants/database.js";
+import * as Messages from "../utils/constants/messages.js";
+
+class Advert {
+  constructor(advert) {
+    this.id = advert.id;
+    this.title = advert.title;
+    this.description = advert.description;
+    this.years = advert.years;
+    this.months = advert.months;
+    this.webUrl = advert.webUrl;
+    this.organizationId = advert.organizationId;
+  }
+
+  static getAll(callback) {
+    database.query(`SELECT * FROM ${DATABASE_NAME}.adverts`, (err, res) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, res);
+      }
+      return;
+    });
+  }
+
+  static getAllFromOrganization(id, callback) {
+    database.query(
+      `SELECT * FROM ${DATABASE_NAME}.adverts WHERE organizationId = ${id}`,
+      (err, res) => {
+        if (err) {
+          callback(err, null);
+        } else {
+          callback(null, res);
+        }
+        return;
+      }
+    );
+  }
+
+  static find(id, callback) {
+    database.query(
+      `SELECT * FROM ${DATABASE_NAME}.adverts WHERE id = ${id}`,
+      (err, res) => {
+        if (err) {
+          callback(err, null);
+        } else {
+          callback(null, res[0]);
+        }
+        return;
+      }
+    );
+  }
+
+  static create(advert, callback) {
+    database.query(
+      `INSERT INTO ${DATABASE_NAME}.adverts SET ?`,
+      advert,
+      (err, res) => {
+        if (err) {
+          callback(err, null);
+        } else {
+          callback(null, advert);
+        }
+        return;
+      }
+    );
+  }
+
+  static update = (id, advert, callback) => {
+    database.query(
+      `UPDATE ${DATABASE_NAME}.adverts SET title = '${advert.title}', description = '${advert.description}', years = '${advert.years}', months = '${advert.months}', days = '${advert.days}', webUrl = '${advert.webUrl}', organizationId = '${advert.organizationId}' WHERE id = ${id}`,
+      (err, res) => {
+        if (err) {
+          callback(err, null);
+        } else if (res.affectedRows === 0) {
+          // Organization with this id was not found
+          callback({ success: false, message: Messages.GET_NOT_FOUND }, null);
+        } else {
+          callback(null, { id, ...advert });
+        }
+        return;
+      }
+    );
+  };
+
+  static delete = (id, callback) => {
+    database.query(
+      `DELETE FROM ${DATABASE_NAME}.adverts WHERE id = ${id}`,
+      (err, res) => {
+        if (err) {
+          callback(err, null);
+        } else if (res.affectedRows === 0) {
+          // Organization with this id was not found
+          callback({ success: false, message: Messages.GET_NOT_FOUND }, null);
+        } else {
+          callback(null, {
+            success: true,
+            message: Messages.DELETE_SUCCESSFUL,
+          });
+        }
+      }
+    );
+  };
+}
+
+export const requiredKeys = [
+  "title",
+  "description",
+  "years",
+  "months",
+  "days",
+  "organizationId",
 ];
+export const allKeys = [
+  "title",
+  "description",
+  "years",
+  "months",
+  "days",
+  "webUrl",
+  "organizationId",
+];
+
+export const ADVERTS = [];
+
+export default Advert;

@@ -6,14 +6,17 @@ const router = express.Router();
 // GET adverts
 router.get("/adverts", AdvertController.getAdverts);
 
+// GET organization adverts
+router.get("/organizations/:id/adverts", AdvertController.getOrganizationAdverts);
+
 // GET advert
 router.get("/adverts/:id", AdvertController.getAdvert);
 
 // POST advert
 router.post("/adverts", AdvertController.postAdvert);
 
-// PATCH advert
-router.patch("/adverts/:id", AdvertController.updateAdvert);
+// PUT advert
+router.put("/adverts/:id", AdvertController.updateAdvert);
 
 // DELETE advert
 router.delete("/adverts/:id", AdvertController.deleteAdvert);
