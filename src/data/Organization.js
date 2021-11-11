@@ -1,7 +1,6 @@
 import database from "../utils/helpers/database.js";
 
 // Constants
-import { DATABASE_NAME } from "../utils/constants/database.js";
 import * as Messages from "../utils/constants/messages.js";
 
 // Constructor

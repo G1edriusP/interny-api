@@ -1,7 +1,6 @@
 import database from "../utils/helpers/database.js";
 
 // Constants
-import { DATABASE_NAME } from "../utils/constants/database.js";
 import * as Messages from "../utils/constants/messages.js";
 
 // Constructor
@@ -15,12 +14,11 @@ class User {
     this.role = user.role;
   }
 
-  static getAll(callback) {
-    database.query(`SELECT id, email, name, surname, role FROM users`, (err, res) => {
+  static getAll(fields, callback) {
+    database.query(`SELECT ${fields.join(", ")} FROM users`, (err, res) => {
       if (err) {
         callback(err, null);
       } else {
-        console.log(res);
         callback(null, res);
       }
       return;

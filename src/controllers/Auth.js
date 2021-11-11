@@ -13,7 +13,7 @@ import * as Messages from "../utils/constants/messages.js";
 import { checkId, checkRequired } from "../utils/helpers/other.js";
 
 const getAllUsers = async (req, res) => {
-  User.getAll((err, data) => {
+  User.getAll(["id", "email", "name", "surname", "role"], (err, data) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -24,7 +24,7 @@ const getAllUsers = async (req, res) => {
 
 const postLogin = async (req, res) => {
   const { email, password } = req.body;
-  User.getAll((err, users) => {
+  User.getAll(["id", "email", "name", "surname", "password"], (err, users) => {
     if (err) {
       res.status(500).send(err);
     } else {

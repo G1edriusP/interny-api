@@ -16,24 +16,10 @@ export const checkRequired = (requiredKeys, allKeys, body, res) => {
     if (Object.keys(body).includes(key)) {
       return true;
     } else {
-      res
-        .status(400)
-        .send({ success: false, message: Messages.REQUIRED_KEY(key) });
+      res.status(400).send({ success: false, message: Messages.REQUIRED_KEY(key) });
       return false;
     }
   });
-
-  // if (valid) {
-  //   const res = {};
-  //   allKeys.forEach((key) => {
-  //     if (Object.keys(body).includes(key)) {
-  //       res[key] = body[key];
-  //     } else {
-  //       res[key] = null;
-  //     }
-  //   });
-  //   return res;
-  // }
 
   return valid ? body : undefined;
 };
