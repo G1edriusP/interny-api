@@ -12,7 +12,7 @@ router.get("/organizations/:id", OrganizationController.getOrganization);
 // POST organization
 router.post("/organizations", OrganizationController.postOrganization);
 
-// PATCH organization
+// PUT organization
 router.put("/organizations/:id", OrganizationController.updateOrganization);
 
 // DELETE organization

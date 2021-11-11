@@ -23,17 +23,17 @@ export const checkRequired = (requiredKeys, allKeys, body, res) => {
     }
   });
 
-  if (valid) {
-    const res = {};
-    allKeys.forEach((key) => {
-      if (Object.keys(body).includes(key)) {
-        res[key] = body[key];
-      } else {
-        res[key] = null;
-      }
-    });
-    return res;
-  }
+  // if (valid) {
+  //   const res = {};
+  //   allKeys.forEach((key) => {
+  //     if (Object.keys(body).includes(key)) {
+  //       res[key] = body[key];
+  //     } else {
+  //       res[key] = null;
+  //     }
+  //   });
+  //   return res;
+  // }
 
-  return undefined;
+  return valid ? body : undefined;
 };

@@ -59,7 +59,7 @@ const updateOrganization = async (req, res) => {
     const data = req.body;
 
     if (Object.keys(data).length === 0) {
-      res.status(400).send({ success: false, message: Messages.BAD_BODY });
+      res.status(415).send({ success: false, message: Messages.BAD_BODY });
     } else {
       const params = checkRequired(requiredKeys, allKeys, data, res);
       if (params) {

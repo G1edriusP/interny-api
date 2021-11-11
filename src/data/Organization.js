@@ -46,7 +46,8 @@ class Organization {
 
   static create(organization, callback) {
     database.query(
-      `INSERT INTO ${DATABASE_NAME}.organizations SET ${organization}`,
+      `INSERT INTO ${DATABASE_NAME}.organizations SET ?`,
+      organization,
       (err, res) => {
         if (err) {
           callback(err, null);
@@ -95,8 +96,6 @@ class Organization {
   };
 }
 
-export const ORGANIZATIONS = [];
-
 export const requiredKeys = ["name", "description", "field", "address"];
 export const allKeys = [
   "name",
@@ -106,5 +105,7 @@ export const allKeys = [
   "longitude",
   "latitude",
 ];
+
+export const ORGANIZATIONS = [];
 
 export default Organization;
