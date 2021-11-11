@@ -6,6 +6,7 @@ import AdvertRoutes from "./routes/Advert.js";
 import OrganizationRoutes from "./routes/Organization.js";
 import ApplicationRoutes from "./routes/Application.js";
 import OtherRoutes from "./routes/Other.js";
+import AuthRoutes from "./routes/Auth.js";
 
 config();
 
@@ -30,6 +31,7 @@ app.use("/", AdvertRoutes);
 app.use("/", OrganizationRoutes);
 app.use("/", ApplicationRoutes);
 app.use("/", OtherRoutes);
+app.use("/auth", AuthRoutes);
 
 // Select on which port the server will run
 let port = process.env.PORT || 5000;
