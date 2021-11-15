@@ -1,17 +1,15 @@
-import jwt from "jsonwebtoken";
 import User from "../../data/User.js";
 import * as Messages from "../constants/messages.js";
+import { jwtr } from "../../app.js";
 
-export const jwtMiddleware = (req, res, next) => {
+export const jwtMiddleware = async (req, res, next) => {
   const authHeader = req.headers.authorization;
 
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    jwt.verify(token, process.env.SECRET_KEY, (err, user) => {
-      if (err) {
-        return res.status(403).send({ success: false, message: Messages.FORBIDDEN });
-      }
-      User.find(user.sub, (err, data) => {
+    try {
+      const tokenPayload = await jwtr.verify(token, process.env.SECRET_KEY);
+      User.find(tokenPayload.sub, (err, data) => {
         if (err) {
           res.status(500).send(err);
         } else if (data) {
@@ -21,7 +19,9 @@ export const jwtMiddleware = (req, res, next) => {
           res.status(404).send({ success: false, message: Messages.GET_NOT_FOUND });
         }
       });
-    });
+    } catch (e) {
+      res.status(403).send({ success: false, message: Messages.FORBIDDEN });
+    }
   } else {
     res.status(401).send({ success: false, message: Messages.MISSING_ACCESS_TOKEN });
   }

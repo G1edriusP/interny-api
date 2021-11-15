@@ -1,16 +1,13 @@
 import { createRequire } from "module";
 
 // JWT stuff
-import jwt from "jsonwebtoken";
+import { jwtr } from "../app.js";
 
 // Database
 import User, { requiredKeys, allKeys } from "../data/User.js";
 
 // Response messages
 import * as Messages from "../utils/constants/messages.js";
-
-// Utils
-import { checkId, checkRequired } from "../utils/helpers/other.js";
 
 const getAllUsers = async (req, res) => {
   User.getAll(["id", "email", "name", "surname", "role"], (err, data) => {
@@ -24,7 +21,7 @@ const getAllUsers = async (req, res) => {
 
 const postLogin = async (req, res) => {
   const { email, password } = req.body;
-  User.getAll(["id", "email", "name", "surname", "password"], (err, users) => {
+  User.getAll(["id", "email", "name", "surname", "password"], async (err, users) => {
     if (err) {
       res.status(500).send(err);
     } else {
@@ -32,13 +29,13 @@ const postLogin = async (req, res) => {
       if (user) {
         // TODO: NORMAL passwords check, then generate an access token
         if (user.password === password) {
-          const accessToken = jwt.sign(
+          const accessToken = await jwtr.sign(
             {
               sub: user.id,
               name: `${user.name} ${user.surname}`,
-              iat: Math.floor(Date.now() / 1000),
             },
-            process.env.SECRET_KEY
+            process.env.SECRET_KEY,
+            { expiresIn: "2h" }
           );
           res.status(200).send({ accessToken });
         } else {
@@ -56,7 +53,13 @@ const postLogout = async (req, res) => {
 
   if (authHeader) {
     const token = authHeader.split(" ")[1];
-    console.log("Somehow handle token deletion");
+    try {
+      const tokenPayload = await jwtr.verify(token, process.env.SECRET_KEY);
+      const isDestroyed = await jwtr.destroy(tokenPayload.jti);
+      res.status(200).send({ success: true });
+    } catch (e) {
+      console.log(e);
+    }
   } else {
     res.status(401).send({ success: false, message: Messages.MISSING_ACCESS_TOKEN });
   }

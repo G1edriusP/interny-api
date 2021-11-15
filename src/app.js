@@ -1,6 +1,9 @@
 import { config } from "dotenv";
 import express, { json } from "express";
 
+import redis from "redis";
+import JWTRedis from "jwt-redis";
+
 // Routes
 import AdvertRoutes from "./routes/Advert.js";
 import OrganizationRoutes from "./routes/Organization.js";
@@ -24,6 +27,15 @@ app.use((err, _, res, next) => {
     return res.status(400).send({ success: false, message: err.message }); // Bad request
   }
 });
+
+// Db for JWT
+const redisClient = redis.createClient({
+  host: process.env.REDIS_HOSTNAME,
+  port: process.env.REDIS_PORT,
+  password: process.env.REDIS_PASSWORD,
+});
+redisClient.on("error", (err) => console.log(err));
+export const jwtr = new JWTRedis.default(redisClient);
 
 // API routes for different objects
 app.use("/", AdvertRoutes);
