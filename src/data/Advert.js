@@ -36,6 +36,20 @@ class Advert {
     });
   }
 
+  static findOrganizationAdvert(orgId, adId, callback) {
+    database.query(
+      `SELECT * FROM adverts WHERE organizationId = ${orgId} AND id = ${adId}`,
+      (err, res) => {
+        if (err) {
+          callback(err, null);
+        } else {
+          callback(null, res[0]);
+        }
+        return;
+      }
+    );
+  }
+
   static find(id, callback) {
     database.query(`SELECT * FROM adverts WHERE id = ${id}`, (err, res) => {
       if (err) {

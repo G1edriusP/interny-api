@@ -10,6 +10,13 @@ router.get("/adverts", jwtMiddleware, AdvertController.getAdverts);
 // GET organization adverts
 router.get("/organizations/:id/adverts", jwtMiddleware, AdvertController.getOrganizationAdverts);
 
+// GET organization advert
+router.get(
+  "/organizations/:id/adverts/:adId",
+  jwtMiddleware,
+  AdvertController.getOrganizationAdvert
+);
+
 // GET advert
 router.get("/adverts/:id", jwtMiddleware, AdvertController.getAdvert);
 

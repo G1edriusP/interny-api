@@ -14,3 +14,4 @@ export const PASSWORDS_DONT_MATCH = "Passwords do not match";
 export const MISSING_ACCESS_TOKEN = "Missing access token";
 export const FORBIDDEN = "Request failed because of a bad access token";
 export const NOT_ALLOWED = "Insufficient permissions";
+export const EXPIRED = "Token has already expired";

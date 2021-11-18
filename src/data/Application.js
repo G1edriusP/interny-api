@@ -22,6 +22,64 @@ class Application {
     });
   }
 
+  static getAdvertApplications(orgId, adId, callback) {
+    database.query(
+      `SELECT * FROM adverts WHERE organizationId = ${orgId} AND id = ${adId}`,
+      (err, adverts) => {
+        if (err) {
+          callback(err, null);
+        } else {
+          database.query(`SELECT * FROM applications`, (err, applications) => {
+            if (err) {
+              callback(err, null);
+            } else {
+              const advert = adverts.find((ad) => ad.id === adId);
+              console.log(advert);
+              const apps = applications
+                .map((app) => (app.advertId === advert.id ? app : null))
+                .filter((app) => app);
+              callback(null, apps);
+            }
+          });
+        }
+        return;
+      }
+    );
+  }
+
+  static getAdvertApplication(orgId, adId, appId, callback) {
+    database.query(
+      `SELECT * FROM adverts WHERE organizationId = ${orgId} AND id = ${adId}`,
+      (err, adverts) => {
+        if (err) {
+          callback(err, null);
+        } else {
+          database.query(`SELECT * FROM applications`, (err, applications) => {
+            if (err) {
+              callback(err, null);
+            } else {
+              const advert = adverts.find((ad) => ad.id === adId);
+              if (advert) {
+                const apps = applications
+                  .map((app) => (app.advertId === advert.id ? app : null))
+                  .filter((app) => app);
+                const app = apps.find((a) => a.id === appId);
+                if (app) {
+                  callback(null, app);
+                } else {
+                  callback(null, { success: false, message: Messages.GET_NOT_FOUND });
+                }
+              } else {
+                callback(null, { success: false, message: Messages.GET_NOT_FOUND });
+              }
+            }
+          });
+        }
+        return;
+      }
+    );
+  }
+
   static find(id, callback) {
     database.query(`SELECT * FROM applications WHERE id = ${id}`, (err, res) => {
       if (err) {

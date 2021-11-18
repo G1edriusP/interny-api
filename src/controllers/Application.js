@@ -17,6 +17,41 @@ const getApplications = async (_, res) => {
   });
 };
 
+const getOrganizationAdvertApplications = async (req, res) => {
+  const orgId = checkId(req, res, "orgId");
+  if (orgId) {
+    const adId = checkId(req, res, "adId");
+    if (adId) {
+      Application.getAdvertApplications(orgId, adId, (err, data) => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          res.send(data);
+        }
+      });
+    }
+  }
+};
+
+const getOrganizationAdvertApplication = async (req, res) => {
+  const orgId = checkId(req, res, "orgId");
+  if (orgId) {
+    const adId = checkId(req, res, "adId");
+    if (adId) {
+      const appId = checkId(req, res, "appId");
+      if (appId) {
+        Application.getAdvertApplication(orgId, adId, appId, (err, data) => {
+          if (err) {
+            res.status(500).send(err);
+          } else {
+            res.send(data);
+          }
+        });
+      }
+    }
+  }
+};
+
 const getApplication = async (req, res) => {
   const id = checkId(req, res);
   if (id) {
@@ -26,9 +61,7 @@ const getApplication = async (req, res) => {
       } else if (data) {
         res.status(200).send(data);
       } else {
-        res
-          .status(404)
-          .send({ success: false, message: Messages.GET_NOT_FOUND });
+        res.status(404).send({ success: false, message: Messages.GET_NOT_FOUND });
       }
     });
   }
@@ -99,6 +132,8 @@ const deleteApplication = async (req, res) => {
 
 export default {
   getApplications,
+  getOrganizationAdvertApplications,
+  getOrganizationAdvertApplication,
   getApplication,
   postApplication,
   updateApplication,

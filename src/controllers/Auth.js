@@ -58,7 +58,7 @@ const postLogout = async (req, res) => {
       const isDestroyed = await jwtr.destroy(tokenPayload.jti);
       res.status(200).send({ success: true });
     } catch (e) {
-      console.log(e);
+      res.status(401).send({ success: false, message: Messages.EXPIRED });
     }
   } else {
     res.status(401).send({ success: false, message: Messages.MISSING_ACCESS_TOKEN });
