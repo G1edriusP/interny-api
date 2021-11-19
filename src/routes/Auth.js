@@ -6,6 +6,9 @@ const router = express.Router();
 // GET users
 router.get("/users", AuthController.getAllUsers);
 
+// POST User
+router.post("/users", AuthController.postUser);
+
 // POST Login
 router.post("/login", AuthController.postLogin);
 

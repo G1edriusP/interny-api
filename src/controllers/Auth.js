@@ -1,5 +1,3 @@
-import { createRequire } from "module";
-
 // JWT stuff
 import { jwtr } from "../app.js";
 
@@ -9,6 +7,8 @@ import User, { requiredKeys, allKeys } from "../data/User.js";
 // Response messages
 import * as Messages from "../utils/constants/messages.js";
 
+import { checkRequired } from "../utils/helpers/other.js";
+
 const getAllUsers = async (req, res) => {
   User.getAll(["id", "email", "name", "surname", "role"], (err, data) => {
     if (err) {
@@ -17,6 +17,25 @@ const getAllUsers = async (req, res) => {
       res.status(200).send(data);
     }
   });
+};
+
+const postUser = async (req, res) => {
+  const data = req.body;
+  if (Object.keys(data).length === 0) {
+    res.status(400).send({ success: false, message: Messages.BAD_BODY });
+  } else {
+    const params = checkRequired(requiredKeys, allKeys, data, res);
+    if (params) {
+      const user = new User(params);
+      User.create(user, (err, data) => {
+        if (err) {
+          res.status(500).send(err);
+        } else {
+          res.status(201).send(data);
+        }
+      });
+    }
+  }
 };
 
 const postLogin = async (req, res) => {
@@ -67,6 +86,7 @@ const postLogout = async (req, res) => {
 
 export default {
   postLogin,
+  postUser,
   getAllUsers,
   postLogout,
 };

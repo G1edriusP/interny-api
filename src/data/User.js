@@ -25,6 +25,17 @@ class User {
     });
   }
 
+  static create(user, callback) {
+    database.query(`INSERT INTO users SET ?`, user, (err, res) => {
+      if (err) {
+        callback(err, null);
+      } else {
+        callback(null, res);
+      }
+      return;
+    });
+  }
+
   static find(id, callback) {
     database.query(
       `SELECT id, email, name, surname, role FROM users WHERE id = ${id}`,
